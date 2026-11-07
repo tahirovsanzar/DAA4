@@ -1,13 +1,29 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import dp.EditDistance;
+import dp.LCS;
+import lcp.Kasai;
+import lcp.SuffixArray;
+import matching.KMPSearch;
+import matching.NaiveSearch;
+import matching.RabinKarpSearch;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+import java.util.Arrays;
+
+public final class Main {
+    public static void main(String[] args) {
+        String first = "CITY";
+        String second = "CITIES";
+        System.out.println("LCS length: " + LCS.length(first, second));
+        System.out.println("Edit distance: " + EditDistance.distance(first, second));
+
+        String text = "CITY CITY SMART CITY";
+        String pattern = "CITY";
+        System.out.println("Naive matches: " + NaiveSearch.search(text, pattern).indices());
+        System.out.println("KMP matches: " + KMPSearch.search(text, pattern).indices());
+        System.out.println("Rabin-Karp matches: " + RabinKarpSearch.search(text, pattern).indices());
+
+        String sample = "banana";
+        int[] suffixArray = SuffixArray.build(sample);
+        System.out.println("Suffix array for banana: " + Arrays.toString(suffixArray));
+        System.out.println("LCP array for banana: " + Arrays.toString(Kasai.lcp(sample, suffixArray)));
     }
 }
